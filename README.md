@@ -13,11 +13,11 @@ In this project we are also consumers of the Http-Rest-Api using RestTemplate.
 We are using a micro-service that converts USD to ILS - we are getting the salaries from the user in USD (when the user passes an employee to save through the /save endpoint) and we save them to the database in ILS.
 
 ## Profiles
-**dev:**\
+**dev:**
 * Saving the users in a local HashMap (not presistence).
 * Using a mock curenncy convertor service - not consuming.
 
-**prod:**\
+**prod:**
 * Saving the users in MySQL database (presistence).
 * Consuming a real Http-Rest-Api using RestTemplate.
 
