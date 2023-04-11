@@ -22,7 +22,7 @@ We are using a micro-service that converts USD to ILS - we are getting the salar
 * Consuming a **real** Http-Rest-Api using RestTemplate.
 
 ## Aspect
-We are using aspects in this project - beore every handling of a request from the user (before every function in the controller - a function that represent the endpoint) we are logging using SpringLogger and SpringAOP - Spring aspect oriented programming.
+We are using aspects in this project,<br>beore every handling of a request from the user (before every function in the controller - a function that represent the endpoint)<br>we are logging using *SpringLogger* and *SpringAOP* - Spring aspect oriented programming.
 
 ## Cofiguring roperties
 We are configuring the following properties using the app.properties file:
