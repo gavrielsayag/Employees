@@ -1,0 +1,9 @@
+*
+!*/
+!.gitignore
+!*.java
+!*.md
+!*.xml
+!*.properties
+!mvnw
+!mvnw.cmd
