@@ -26,8 +26,8 @@ We are using aspects in this project - beore every handling of a request from th
 
 ## Cofiguring roperties
 We are configuring the following properties using the app.properties file:
-* **Service Port** - We are configuring the port of our service using the **server.port** property.
-* **Database URL** - We are configuring the database URL using the **spring.datasource.url** property.
-* **Database Username** - We are configuring the database username using the **spring.datasource.username** property.
-* **Database Password** - We are configuring the database password using the **spring.datasource.password** property.
-* **Max Number Of Employees** - We are configuring the max number of employees that the server can save using the **max.employees** property.
+* **Service Port** - We are configuring the port of our service using the ***server.port*** property.
+* **Database URL** - We are configuring the database URL using the ***spring.datasource.url*** property.
+* **Database Username** - We are configuring the database username using the ***spring.datasource.username*** property.
+* **Database Password** - We are configuring the database password using the ***spring.datasource.password*** property.
+* **Max Number Of Employees** - We are configuring the max number of employees that the server can save using the ***max.employees*** property.
