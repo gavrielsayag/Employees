@@ -13,13 +13,13 @@ In this project we are also consumers of the Http-Rest-Api using RestTemplate.
 We are using a micro-service that converts USD to ILS - we are getting the salaries from the user in USD (when the user passes an employee to save through the /save endpoint) and we save them to the database in ILS.
 
 ## Profiles
-**dev:**
-* Saving the users in a local HashMap (not presistence).
-* Using a mock curenncy convertor service - not consuming.
+**"dev":**
+* Saving the users in a **local HashMap** (not presistence).
+* Using a **mock** curenncy convertor service - not consuming.
 
-**prod:**
-* Saving the users in MySQL database (presistence).
-* Consuming a real Http-Rest-Api using RestTemplate.
+**"prod":**
+* Saving the users in **MySQL database** (presistence).
+* Consuming a **real** Http-Rest-Api using RestTemplate.
 
 ## Aspect
 We are using aspects in this project - beore every handling of a request from the user (before every function in the controller - a function that represent the endpoint) we are logging using SpringLogger and SpringAOP - Spring aspect oriented programming.
