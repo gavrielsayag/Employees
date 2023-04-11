@@ -1,7 +1,7 @@
 # Employees
 A mini server which stores details about employees. Using MySQL database and Spring-Boot.
 
-##Endpoints:
+## Endpoints:
 * **/get/{id}** - returns the employee (JSON format) with the given ID.
 * **/get** - returns a list of all of the employees.
 * **/delete** - deletes the employee with the given id (passed as a QueryParam).
