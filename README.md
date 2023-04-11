@@ -1,5 +1,5 @@
 # Employees
-A mini server which stores details about employees. Using MySQL database and Spring-Boot.
+A mini server which stores details about employees.<br> Using MySQL database and Spring-Boot.
 
 ## Endpoints:
 * **/get/{id}** - returns the employee (JSON format) with the given ID.
