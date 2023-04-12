@@ -26,11 +26,10 @@ public class ControllersFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException 
 	{
-		HttpServletResponse httpResponse = (HttpServletResponse)response;
-		logger.info("filter - before forwarding the request to the controller for execution!\nHeaders before - " + httpResponse.getHeaderNames());
-		httpResponse.addHeader("Funny header", "This is so funny");
+		logger.info("filter - before forwarding the request to the controller for execution!\nHeaders before - " + ((HttpServletResponse)response).getHeaderNames());
+		((HttpServletResponse)response).addHeader("Funny header", "This is so funny");
 		chain.doFilter(request, response);
-		logger.info("filter - after execution and getting response! we added to the response a funny header\nHeaders after - " + httpResponse.getHeaderNames());
+		logger.info("filter - after execution and getting response! we added to the response a funny header\nHeaders after - " + ((HttpServletResponse)response).getHeaderNames());
 	}
 
 }
