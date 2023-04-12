@@ -21,13 +21,25 @@ We are using a micro-service that converts USD to ILS - we are getting the salar
 * Saving the users in **MySQL database** (presistence).
 * Consuming a **real** Http-Rest-Api using RestTemplate.
 
-## Aspect
-We are using aspects in this project,<br>beore every handling of a request from the user (before every function in the controller - a function that represent the endpoint)<br>we are logging using *SpringLogger* and *SpringAOP* - Spring aspect oriented programming.
+## Actuator
+We are exposing extra 2 endpoints - ***"/actuator/beans"*** and ***"/actuator/health"*** using the actuator tool - a tool that helps you to provide information about your service using endpoints.
 
-## Cofiguring roperties
+## Cofiguring properties
 We are configuring the following properties using the app.properties file:
 * **Service Port** - We are configuring the port of our service using the ***server.port*** property.
 * **Database URL** - We are configuring the database URL using the ***spring.datasource.url*** property.
 * **Database Username** - We are configuring the database username using the ***spring.datasource.username*** property.
 * **Database Password** - We are configuring the database password using the ***spring.datasource.password*** property.
 * **Max Number Of Employees** - We are configuring the max number of employees that the server can save using the ***max.employees*** property.
+* **Exposing endpoints of the Actuator tool** - We are exposing the endpoints by configuring the ***management.endpoints.web.exposure.include=beans, health*** property.
+
+## Aspect
+We are using aspects in this project,<br>beore every handling of a request from the user (before every function in the controller - a function that represent the endpoint)<br>we are logging using *SpringLogger* and *SpringAOP* - Spring aspect oriented programming.
+
+## Filter
+We are using filter which helps us to preform a logic before every processing of a request and after getting the response.<br>
+We are logging information about the headers of the response. Also, we are adding to our responses a funny header.
+
+## Interceptor
+We are using interceptor in order to log before forwarding the request to the controller, after getting the response and before forwarding it to the user, and after finishing all.
+
