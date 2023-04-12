@@ -8,6 +8,10 @@ A mini server which stores details about employees.<br> Using MySQL database and
 * **/save** - saves the given employee (passed as a JSON in the request body).
 * **/update** - updates the given employee (passed as a JSON in the request body).
 
+## OneToOne relationship
+Each employee has a unique address, so we are implementing the one to one relationship using the JPA annotations.<br>
+The Employee has a FK field - the primary key of the adress (in a different table).
+
 ## Rest Consumer - Third party
 In this project we are also consumers of the Http-Rest-Api using RestTemplate.
 We are using a micro-service that converts USD to ILS - we are getting the salaries from the user in USD (when the user passes an employee to save through the /save endpoint) and we save them to the database in ILS.
@@ -21,7 +25,7 @@ We are using a micro-service that converts USD to ILS - we are getting the salar
 * Saving the users in **MySQL database** (presistence).
 * Consuming a **real** Http-Rest-Api using RestTemplate.
 
-**"default
+**"default"**
 * Saving the users in **MySQL database** (presistence).
 * Using a **mock** curenncy convertor service - not consuming.
 
