@@ -40,7 +40,7 @@ We are configuring the following properties using the app.properties file:
 * **Database Password** - We are configuring the database password using the ***spring.datasource.password*** property.
 * **Max Number Of Employees** - We are configuring the max number of employees that the server can save using the ***max.employees*** property.
 * **Exposing endpoints of the Actuator tool** - We are exposing the endpoints by configuring the ***management.endpoints.web.exposure.include=beans, health*** property.
-* **URL of the thirs party currency converter service** - We are configuring the url of the thirs party currency converter service URL using the ***thirdpary.currencyconverter*** property.
+* **URL of the third party currency converter service** - We are configuring the url of the thirs party currency converter service URL using the ***thirdpary.currencyconverter*** property.
 
 ## Aspect
 We are using aspects in this project,<br>beore every handling of a request from the user (before every function in the controller - a function that represent the endpoint)<br>we are logging using *SpringLogger* and *SpringAOP* - Spring aspect oriented programming.
