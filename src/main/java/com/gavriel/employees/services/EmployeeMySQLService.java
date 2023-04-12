@@ -15,12 +15,12 @@ import com.gavriel.employees.repositories.EmployeeRepository;
 @Profile({"prod", "default"})
 public class EmployeeMySQLService implements IEmployeeService {
 	
-	@Autowired
 	private EmployeeRepository repo;
 	private final int maxEmployees;
 	
-	public EmployeeMySQLService(@Value("${max.employees}") int maxEmployees)
+	public EmployeeMySQLService(@Value("${max.employees}") int maxEmployees, EmployeeRepository repo)
 	{
+		this.repo = repo;
 		this.maxEmployees = maxEmployees;
 	}
 
@@ -71,6 +71,10 @@ public class EmployeeMySQLService implements IEmployeeService {
 		}
 		repo.saveAndFlush(emp);
 		return status.SUCCESS;
+	}
+
+	public int getMaxEmployees() {
+		return maxEmployees;
 	}
 
 }

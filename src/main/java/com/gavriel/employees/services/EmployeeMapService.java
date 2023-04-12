@@ -71,4 +71,9 @@ public class EmployeeMapService implements IEmployeeService {
 		return status.SUCCESS;
 	}
 
+	public int getMaxEmployees() {
+		return maxEmployees;
+	}
+	
+
 }

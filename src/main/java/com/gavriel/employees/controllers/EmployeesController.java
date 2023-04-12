@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,36 +16,40 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.http.HttpStatus;
 
+import com.gavriel.employees.exceptions.EmployeeConflictException;
+import com.gavriel.employees.exceptions.EmployeeException;
+import com.gavriel.employees.exceptions.EmployeeInternalException;
+import com.gavriel.employees.exceptions.EmployeeNoSpaceException;
+import com.gavriel.employees.exceptions.EmployeeNotFoundException;
 import com.gavriel.employees.models.EmployeeModel;
-import com.gavriel.employees.services.ICurrencyConverter;
 import com.gavriel.employees.services.IEmployeeService;
+import com.gavriel.employees.thirdparty.ICurrencyConverter;
 
 import jakarta.validation.Valid;
 
 @RestController
 public class EmployeesController {
 	
-	@Autowired
 	private ICurrencyConverter converter;
-	
-	@Autowired
 	private IEmployeeService service;
 	
 	private final Logger logger;
 	
-	public EmployeesController()
+	public EmployeesController(ICurrencyConverter converter, IEmployeeService service)
 	{
+		this.converter = converter;
+		this.service = service;
 		logger = LoggerFactory.getLogger(this.getClass());
 	}
 	
 	@GetMapping("/get/{id}")
-	public EmployeeModel GetEmployee(@PathVariable("id") int id)
+	public EmployeeModel GetEmployee(@PathVariable("id") int id) throws EmployeeNotFoundException
 	{
 		EmployeeModel emp = service.FindEmployee(id);
 		if(null == emp)
 		{
 			logger.error("Trying to get a non-exists employee");
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "The employee you wanted to get ןisn't found");
+			throw new EmployeeNotFoundException("getting an employee", id);
 		}
 		return emp;
 	}
@@ -58,68 +61,61 @@ public class EmployeesController {
 	}
 	
 	@DeleteMapping("/delete")
-	public void DeleteEmployee(@RequestParam("id") int id) {
+	public void DeleteEmployee(@RequestParam("id") int id) throws EmployeeException {
 		switch(service.DeleteEmployee(id))
 		{
 		case SUCCESS:
 			break;
 		case INTERNAL_FAILURE:
 			logger.error("Failed to delete the employee");
-			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to delete the employee");
+			throw new EmployeeInternalException("deleting an employee");
 		case NOT_FOUND:
 			logger.error("Trying to delete a non-exists employee");
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "The employee you wanted to delete ןisn't found");
+			throw new EmployeeNotFoundException("deleting an employee", id);
 		default:
 			logger.error("Unknown error");
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Unknown error");
+			throw new EmployeeException("deleting an employee");
 		}
 
 	}
 	
 	@PostMapping("/save")
 	@ResponseStatus(HttpStatus.CREATED)
-	public void PostEmployee(@RequestBody @Valid EmployeeModel emp){
-		try
-		{
-			emp.setSalary((int) converter.USDToILS(emp.getSalary()));
-		}
-		catch(Exception e)
-		{
-			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.toString());
-		}
+	public void PostEmployee(@RequestBody @Valid EmployeeModel emp) throws Exception{
+		emp.setSalary((int) converter.USDToILS(emp.getSalary()));
 		switch(service.SaveEmployee(emp)) {
 		case SUCCESS:
 			break;
 		case CONFLICT:
 			logger.error("Trying to save an already-exists employee");
-			throw new ResponseStatusException(HttpStatus.CONFLICT, "There is a user with this id, you can delete this user or change the id of the new employee");
+			throw new EmployeeConflictException("creating an employee", emp.getId());
 		case INTERNAL_FAILURE:
 			logger.error("Failed to save the employee");
-			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "failed to update the data");
+			throw new EmployeeInternalException("creating an employee");
 		case NO_SPACE:
 			logger.error("No space to save a new employee");
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "There is no space left for new employees, please remove some employees in order to add new ones");
+			throw new EmployeeNoSpaceException("creating an employee", service.getMaxEmployees());
 		default:
 			logger.error("Unknown error");
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Unknown error");
+			throw new EmployeeException("creating an employee");
 		}
 	}
 	
 	@PutMapping("/update")
-	public void PutEmployee(@RequestBody @Valid EmployeeModel emp) {
+	public void PutEmployee(@RequestBody @Valid EmployeeModel emp) throws EmployeeException {
 		switch(service.UpdateEmployee(emp))
 		{
 		case SUCCESS:
 			break;
 		case INTERNAL_FAILURE:
 			logger.error("Failed to update the employee");
-			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "failed to update the data");
+			throw new EmployeeInternalException("updating an employee");
 		case NOT_FOUND:
 			logger.error("Trying to update a non-exists employee");
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "The employee you wanted to update ןisn't found");
+			throw new EmployeeNotFoundException("updating an employee", emp.getId());
 		default:
 			logger.error("Unknown error");
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Unknown error");
+			throw new EmployeeException("updating an employee");
 		}
 	}
 	

@@ -11,5 +11,6 @@ public interface IEmployeeService {
 	public status DeleteEmployee(int id);
 	public status SaveEmployee(EmployeeModel emp);
 	public status UpdateEmployee(EmployeeModel emp);
+	public int getMaxEmployees();
 
 }

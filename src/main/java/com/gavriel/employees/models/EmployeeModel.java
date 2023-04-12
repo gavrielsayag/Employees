@@ -1,9 +1,12 @@
 package com.gavriel.employees.models;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
@@ -15,54 +18,57 @@ public class EmployeeModel {
 	@NotNull
 	private String name;
 	@NotNull
-	private String city;
-	@NotNull
-	private String country;
-	@NotNull
 	private Integer salary;
+	@NotNull
+	@Valid
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "address_id", referencedColumnName = "id")
+	private AddressModel address;
+	
+	public EmployeeModel(@NotNull Integer id, @NotNull String name,
+			@NotNull Integer salary, @NotNull @Valid AddressModel address) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.salary = salary;
+		this.address = address;
+	}
 	
 	public EmployeeModel()
 	{
 		
 	}
-	
-	public EmployeeModel(Integer id, String name, String city, String country, Integer salary) {
-		this.id = id;
-		this.name = name;
-		this.city = city;
-		this.country = country;
-		this.salary = salary;
-	}
-	
+
 	public Integer getId() {
 		return id;
 	}
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getCity() {
-		return city;
-	}
-	public void setCity(String city) {
-		this.city = city;
-	}
-	public String getCountry() {
-		return country;
-	}
-	public void setCountry(String country) {
-		this.country = country;
-	}
+
 	public Integer getSalary() {
 		return salary;
 	}
+
 	public void setSalary(Integer salary) {
 		this.salary = salary;
+	}
+
+	public AddressModel getAddress() {
+		return address;
+	}
+
+	public void setAddress(AddressModel address) {
+		this.address = address;
 	}
 	
 

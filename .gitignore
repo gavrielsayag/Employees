@@ -5,3 +5,4 @@
 !*.md
 !*.xml
 !*.properties
+target/

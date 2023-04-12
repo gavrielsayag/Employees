@@ -78,7 +78,7 @@ public class EmployeeExceptionHandler {
 	public Map<String, String> ExceptionHandling(Throwable ex)
 	{
 		Map<String, String> response = new HashMap<>();
-		response.put("Main message", "An unknown error occured while trying to execute the operation");
+		response.put("Main message", "An error occured while trying to execute the operation");
 		response.put("Message", ex.getMessage());
 		response.put("Stamp", "Throwable");
 		return response;
