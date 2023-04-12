@@ -8,7 +8,11 @@ A mini server which stores details about employees.<br> Using MySQL database and
 * **/save** - saves the given employee (passed as a JSON in the request body).
 * **/update** - updates the given employee (passed as a JSON in the request body).
 
-## Rest Consumer
+## OneToOne relationship
+Each employee has a unique address, so we are implementing the one to one relationship using the JPA annotations.<br>
+The Employee has a FK field - the primary key of the adress (in a different table).
+
+## Rest Consumer - Third party
 In this project we are also consumers of the Http-Rest-Api using RestTemplate.
 We are using a micro-service that converts USD to ILS - we are getting the salaries from the user in USD (when the user passes an employee to save through the /save endpoint) and we save them to the database in ILS.
 
@@ -21,6 +25,10 @@ We are using a micro-service that converts USD to ILS - we are getting the salar
 * Saving the users in **MySQL database** (presistence).
 * Consuming a **real** Http-Rest-Api using RestTemplate.
 
+**"default"**
+* Saving the users in **MySQL database** (presistence).
+* Using a **mock** curenncy convertor service - not consuming.
+
 ## Actuator
 We are exposing extra 2 endpoints - ***"/actuator/beans"*** and ***"/actuator/health"*** using the actuator tool - a tool that helps you to provide information about your service using endpoints.
 
@@ -32,6 +40,7 @@ We are configuring the following properties using the app.properties file:
 * **Database Password** - We are configuring the database password using the ***spring.datasource.password*** property.
 * **Max Number Of Employees** - We are configuring the max number of employees that the server can save using the ***max.employees*** property.
 * **Exposing endpoints of the Actuator tool** - We are exposing the endpoints by configuring the ***management.endpoints.web.exposure.include=beans, health*** property.
+* **URL of the thirs party currency converter service** - We are configuring the url of the thirs party currency converter service URL using the ***thirdpary.currencyconverter*** property.
 
 ## Aspect
 We are using aspects in this project,<br>beore every handling of a request from the user (before every function in the controller - a function that represent the endpoint)<br>we are logging using *SpringLogger* and *SpringAOP* - Spring aspect oriented programming.
@@ -42,4 +51,7 @@ We are logging information about the headers of the response. Also, we are addin
 
 ## Interceptor
 We are using interceptor in order to log before forwarding the request to the controller, after getting the response and before forwarding it to the user, and after finishing all.
+
+## ExceptionHandler
+We are using ExceptionHandlers in order to let the user know in case of errors.
 
