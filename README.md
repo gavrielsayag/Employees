@@ -30,7 +30,7 @@ We are using a micro-service that converts USD to ILS - we are getting the salar
 * Using a **mock** curenncy convertor service - not consuming.
 
 ## Actuator
-We are exposing extra 2 endpoints - ***"/actuator/beans"*** and ***"/actuator/health"*** using the actuator tool - a tool that helps you to provide information about your service using endpoints.
+We are exposing 2 extra endpoints - ***"/actuator/beans"*** and ***"/actuator/health"*** using the actuator tool - a tool that helps you to provide information about your service using endpoints.
 
 ## Cofiguring properties
 We are configuring the following properties using the app.properties file:
