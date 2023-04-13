@@ -6,3 +6,5 @@
 !*.xml
 !*.properties
 target/
+!.jar
+!mvnw*
