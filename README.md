@@ -8,6 +8,13 @@ A mini server which stores details about employees.<br> Using MySQL database and
 * **/save** - saves the given employee (passed as a JSON in the request body).
 * **/update** - updates the given employee (passed as a JSON in the request body).
 
+## Environmental variable
+* **MYSQL_HOST** - default is *localhost*
+* **MYSQL_PORT** - default is *3306*
+* **MYSQL_DB** - default is *db*
+* **MYSQL_USERNAME** - default is *root*
+* **MYSQL_PASSWORD** - default is *password123*
+
 ## OneToOne relationship
 Each employee has a unique address, so we are implementing the one to one relationship using the JPA annotations.<br>
 The Employee has a FK field - the primary key of the adress (in a different table).
@@ -54,4 +61,21 @@ We are using interceptor in order to log before forwarding the request to the co
 
 ## ExceptionHandler
 We are using ExceptionHandlers in order to let the user know in case of errors.
+
+## Docker
+
+The employee service is very easy to install and deploy in a Docker container.
+The docker creates a mysql container and a container for the app itself.
+run the following command at the repository root folder:
+
+```sh
+docker-compose up
+```
+
+You can configure the profile by editiong the docker-compose.yml file.<br>
+Go to the *environment* section and add 
+```sh
+SPRING_PROFILES_ACTIVE: <profile>
+```
+
 
