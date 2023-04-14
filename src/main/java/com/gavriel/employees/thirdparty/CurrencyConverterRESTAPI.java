@@ -15,26 +15,29 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class CurrencyConverterRESTAPI implements ICurrencyConverter {
 	
 	private RestTemplate restTemplate;
-	private final String URL;
+	private final String finalURL;
 	
-	public CurrencyConverterRESTAPI(@Value("${thirdpary.currencyconverter}")String URL)
+	public CurrencyConverterRESTAPI(@Value("${thirdpary.currencyconverter.url}")String URL, @Value("${thirdpary.currencyconverter.apikey}")String apiKey)
 	{
-		this.URL = URL;
+		this.finalURL = URL + "&apiKey=" + apiKey;
+		System.out.println(finalURL);
 		restTemplate = new RestTemplate();
 	}
 
 	@Override
 	public double USDToILS(double usd) throws Exception {
-		ResponseEntity<String> response = restTemplate.getForEntity(URL , String.class);
+		ResponseEntity<String> response = restTemplate.getForEntity(finalURL , String.class);
 		if(HttpStatus.OK != response.getStatusCode())
 		{
 			throw new Exception("Bad status code");
 		}
 		ObjectMapper mapper = new ObjectMapper();
-		JsonNode root = mapper.readTree(response.getBody());
-		JsonNode convertRate = root.path("convertRate");
-		return convertRate.asDouble();
+		String JsonResponse = response.getBody();
+		JsonNode root = mapper.readTree(JsonResponse);
+		JsonNode resultsNode = root.get("results");
+		JsonNode usdIlsNode = resultsNode.get("USD_ILS");
+		JsonNode valNode = usdIlsNode.get("val");
+		return valNode.asDouble();
+		
 	}
-	
-
 }

@@ -19,7 +19,7 @@ services:
       MYSQL_USERNAME: root
       MYSQL_PASSWORD: Password.123
   dbservice:
-    image: mysql:latest
+    image: mysql:5
     ports:
       - "3307:3306"
     restart:
@@ -27,8 +27,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: Password.123
       MYSQL_DATABASE: docker
-#     volumes:
+#    volumes:
 #       - ./mysql-data:/var/lib/mysql
-# volumes:
+#volumes:
 #   mysql-data:
 #     driver: local
